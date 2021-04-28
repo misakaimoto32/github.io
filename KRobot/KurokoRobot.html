@@ -132,6 +132,7 @@ position: relative;
 <body><center>
 
 <div id="container">
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <div id="content">
 <div id="scroll">
 <ul id="save"></ul>
@@ -139,9 +140,9 @@ position: relative;
 </div>
 
 <div id="edit">
-<img src="img/2.jpg" onclick="change()" id="Img">
+<img src="img/1.jpg" onclick="change()" id="Img">
 <input type="text" name="" id="txt">
-<input type="button" class="but-save-left"  name="" onclick="sent()" value="发送" id="btn">
+<input type="button" class="but-save-left" onclick="sent()" value="发送" id="btn">
 </div>
 </div>
 </center>
@@ -162,7 +163,7 @@ var oTxt=document.getElementById('txt');
 var oBtn=document.getElementById('btn');
 var oSTxt=document.getElementsByClassName('showTxt');
 var oSave=document.getElementById('save');
-var num=1;
+var num=0;
 var strCOW="我想要法姐姐如石楠花般洁白如钻石般闪耀的小！橡！皮！";
 var rec1=new Array("透透","快让我透透","坂坂让我透透","让我透透！");
 var rec2=new Array("康康小橡皮","法姐姐康康小橡皮","让我康康小橡皮","透透小橡皮");
@@ -180,7 +181,7 @@ console.log(num);
  //发送事件
  function sent(){
 if(!oTxt.value)return;
-if(oTxt.value=="COW"){COW();oTxt.value='';return;}
+if(oTxt.value.toUpperCase()=="COW"){COW();oTxt.value='';return;}
 console.log(oTxt.value);
 addCon();
 
