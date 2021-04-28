@@ -225,16 +225,15 @@ input{
 	 color: #fff;
 }
 .but-save-left{   
- width: 50px;   
- height: 10px;   
+ width: 100px;   
+ height: 80px;   
  display: block;   
  background-color: #4a77d4;   
  border: 1px solid #3762bc;   
  color: #fff;   
  padding: 9px 14px;   
  font-size: 8px;   
- line-height: normal;  
- border-radius: 0 15px 15px 0;   
+ line-height: normal;    
  margin: 0;   
 }
 .but-save-right{   
