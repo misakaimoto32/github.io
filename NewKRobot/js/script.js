@@ -130,28 +130,28 @@ function COW(){
 	if(user==0){locf="right";locb="left"}else if(user==1){locf="left";locb="right"}else{}
 	timeoutID = setTimeout(() => {
 	   appendChat(loc,"img/tjf.jpg",strCOW[i])
-	}, 0)
+	}, 0);scrollBottom();
 	timeoutID = setTimeout(() => {
 	   appendChat(locf,"img/2.jpg","?")
-	}, 1000)
+	}, 1000);scrollBottom();
 	timeoutID = setTimeout(() => {
 	   appendChat(locb,"img/1.jpg","?")
-	}, 1100)
+	}, 1100);scrollBottom();
 	timeoutID = setTimeout(() => {
 	   appendChat(loc,"img/kalie.jpg","草")
-	}, 1500)
+	}, 1500);scrollBottom();
 	timeoutID = setTimeout(() => {
 	   appendChat(loc,"img/zhushu.jpg","好恶心")
-	}, 2500)
+	}, 2500);scrollBottom();
 	timeoutID = setTimeout(() => {
 	   appendChat(loc,"img/yun.jpg","性骚扰了属于是")
-	}, 3500)
+	}, 3500);scrollBottom();
 	timeoutID = setTimeout(() => {
 	   appendChat(loc,"img/gugugu.jpg","我看不懂,但我大受震撼")
-	}, 4500)
+	}, 4500);scrollBottom();
 	timeoutID = setTimeout(() => {
 	   appendChat(loc,"img/luren.jpg","我是来看热闹的");
-	}, 5500)
+	}, 5500);scrollBottom();
 }
 
 /**
