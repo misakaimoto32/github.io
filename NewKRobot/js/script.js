@@ -86,22 +86,22 @@ function appendChat(position, imgSrc, text){
 /**
  * 发送信息按钮被点击
  */
-function sendMessage(){
+async function sendMessage(){
     window.clearTimeout(timeoutID);
     let text = document.getElementById("input-input");
-	let btn=document.getElementById("input-button");
-    if(text.value == "") return;else if(text.value.toUpperCase() == "COW"){ btn.style.display="none"; text.value=""; COW();
-	timeoutID = setTimeout(() => {
-	   btn.style.display="block";
-	}, 5500)
-	return}
-    appendChat("right", USERS_LIST[user].img, text.value)
-    text.value = ""
-    scrollBottom()
 
-    timeoutID = setTimeout(() => {
+    if(text.value == "") return;
+
+    if(/cow/i.test(text.value)){
+        text.value = "";
+        COW();
+	}else{
+        appendChat("right", USERS_LIST[user].img, text.value)
+        text.value = ""
+        scrollBottom()
+        await sleep((Math.round(Math.random() * (2 - 1)) + 1) * 1000)
         kurukoReply()
-    }, (Math.round(Math.random() * (2 - 1)) + 1) * 1000)
+    }
 }
 
 /**
@@ -114,44 +114,79 @@ function kurukoReply(){
 }
 
 /**
+ * 召唤天津风批话
+ */
+async function COW(){
+    let btn = document.getElementById("input-button")
+    btn.style.display = "none"; 
+
+	let strCOW = ["我想要法姐姐如石楠花般洁白如钻石般闪耀的小！橡！皮！", "一拳打进法姐姐批里面"]
+	let locf, locb;
+	if(user == 0){
+        locf = "right";
+        locb = "left"
+    }else if(user == 1){
+        locf = "left";
+        locb = "right";
+    }else{
+        locf = "left";
+        locb = "left";
+    }
+
+    appendChat("left", "img/tjf.jpg", strCOW[Math.floor(Math.random() * strCOW.length)]);
+    scrollBottom();
+
+    await sleep((Math.round(Math.random() * (2.5 - 0.5)) + 0.5) * 1000);
+    appendChat(locf, "img/2.jpg", "?");
+    scrollBottom();
+
+    await sleep((Math.round(Math.random() * (2.5 - 0.5)) + 0.5) * 1000);
+    appendChat(locb, "img/1.jpg", "?");
+    scrollBottom();
+
+    await sleep((Math.round(Math.random() * (2.5 - 0.5)) + 0.5) * 1000);
+    appendChat("left", "img/kalie.jpg", "草");
+    scrollBottom();
+
+    await sleep((Math.round(Math.random() * (2.5 - 0.5)) + 0.5) * 1000);
+    appendChat("left", "img/gugugu.jpg", "我看不懂,但我大受震撼");
+    scrollBottom();
+
+    await sleep((Math.round(Math.random() * (2.5 - 0.5)) + 0.5) * 1000);
+    appendChat("left", "img/zhushu.jpg", "好恶心");
+    scrollBottom();
+
+    await sleep((Math.round(Math.random() * (2.5 - 0.5)) + 0.5) * 1000);
+    appendChat("left", "img/klee.jpg", "🐮🍺");
+    scrollBottom();
+
+    await sleep((Math.round(Math.random() * (2.5 - 0.5)) + 0.5) * 1000);
+    appendChat("left", "img/yun.jpg", "性骚扰了属于是");
+    scrollBottom();
+
+    await sleep((Math.round(Math.random() * (2.5 - 0.5)) + 0.5) * 1000);
+    appendChat("left", "img/luren.jpg", "我是来看热闹的");
+    scrollBottom();
+
+    btn.style.display = "block";
+}
+
+/**
+ * 设置回复延迟
+ * @param {number} ms 延迟时间(毫秒) 
+ */
+function sleep(ms){
+    return new Promise(function(resolve) {
+        setTimeout(resolve, ms)
+    })
+}
+
+/**
  * 滚动到底部
  */
 function scrollBottom(){
     let contentBox = document.getElementById("content-box");
     contentBox.scrollTop = contentBox.scrollHeight;
-}
-/*
-*召唤天津风
-*/
-function COW(){
-	var strCOW = {0:"我想要法姐姐如石楠花般洁白如钻石般闪耀的小！橡！皮！",1:"一拳打进法姐姐批里面"};
-	var i=Math.floor(Math.random()*2);
-	var locf;var locb;var loc="left";
-	if(user==0){locf="right";locb="left"}else if(user==1){locf="left";locb="right"}else{}
-	timeoutID = setTimeout(() => {
-	   appendChat(loc,"img/tjf.jpg",strCOW[i])
-	}, 0);scrollBottom();
-	timeoutID = setTimeout(() => {
-	   appendChat(locf,"img/2.jpg","?")
-	}, 1000);scrollBottom();
-	timeoutID = setTimeout(() => {
-	   appendChat(locb,"img/1.jpg","?")
-	}, 1100);scrollBottom();
-	timeoutID = setTimeout(() => {
-	   appendChat(loc,"img/kalie.jpg","草")
-	}, 1500);scrollBottom();
-	timeoutID = setTimeout(() => {
-	   appendChat(loc,"img/zhushu.jpg","好恶心")
-	}, 2500);scrollBottom();
-	timeoutID = setTimeout(() => {
-	   appendChat(loc,"img/yun.jpg","性骚扰了属于是")
-	}, 3500);scrollBottom();
-	timeoutID = setTimeout(() => {
-	   appendChat(loc,"img/gugugu.jpg","我看不懂,但我大受震撼")
-	}, 4500);scrollBottom();
-	timeoutID = setTimeout(() => {
-	   appendChat(loc,"img/luren.jpg","我是来看热闹的");
-	}, 5500);scrollBottom();
 }
 
 /**
