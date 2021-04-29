@@ -1,17 +1,27 @@
 //所有可选用户
 const USERS_LIST = [
     {
-        "img": "./img/shuiyue.jpg",
-        "name": "水月",
-        "chat": ["👀", "可爱", "水月可爱", "透透😋", "让我透透！", "穿", "穿!", "水月穿", "水月穿！", "喝水月的妹汁😋", "呜呜呜"]
-    },
-    {
         "img": "./img/fajiejie.jpg",
         "name": "法姐姐",
-        "chat": ["康康小橡皮👀", "小橡皮可爱", "法姐姐康康小橡皮", "透透😋", "让我康康小橡皮", "穿", "法姐姐穿！", "看看橡皮🥺", "透透小橡皮", "呜呜呜"]
-    }
-]
+        "chat": ["康康小橡皮👀", "小橡皮", "法姐姐康康小橡皮", "透透😋", "让我康康小橡皮", "穿", "法姐姐穿！", "看看橡皮🥺", "透透小橡皮", "呜呜呜"]
+    },
+	{
+		"img":"./img/1.jpg",
+		"name":"坂坂",
+		"chat":["透透🥺", "快让我透透🥺", "坂坂让我透透", "让我透透！", "hso"]
+	},
+	{
+		"img": "./img/3.jpg",
+		"name": "火鸡味锅巴🐎",
+		"chat":["😅", "😅", "禁止流汗黄豆😅", "开始了是吧"]
+	},
+	{
+	    "img": "./img/shuiyue.jpg",
+	    "name": "水月",
+	    "chat": ["👀", "可爱", "水月可爱", "透透😋", "让我透透！", "穿", "穿!", "水月穿", "水月穿！", "喝水月的妹汁😋", "呜呜呜"]
+	},
 
+]
 //当前选择的用户
 let user = 0
 //对话延迟ID
@@ -73,21 +83,25 @@ function appendChat(position, imgSrc, text){
         </div>
     `)
 }
-
 /**
  * 发送信息按钮被点击
  */
 function sendMessage(){
     window.clearTimeout(timeoutID);
     let text = document.getElementById("input-input");
-    if(text.value == "") return
+	let btn=document.getElementById("input-button");
+    if(text.value == "") return;else if(text.value.toUpperCase() == "COW"){ btn.style.display="none"; text.value=""; COW();
+	timeoutID = setTimeout(() => {
+	   btn.style.display="block";
+	}, 5500)
+	return}
     appendChat("right", USERS_LIST[user].img, text.value)
     text.value = ""
     scrollBottom()
 
     timeoutID = setTimeout(() => {
         kurukoReply()
-    }, (Math.round(Math.random() * (3 - 1)) + 1) * 1000)
+    }, (Math.round(Math.random() * (2 - 1)) + 1) * 1000)
 }
 
 /**
@@ -105,6 +119,39 @@ function kurukoReply(){
 function scrollBottom(){
     let contentBox = document.getElementById("content-box");
     contentBox.scrollTop = contentBox.scrollHeight;
+}
+/*
+*召唤天津风
+*/
+function COW(){
+	var strCOW = {0:"我想要法姐姐如石楠花般洁白如钻石般闪耀的小！橡！皮！",1:"一拳打进法姐姐批里面"};
+	var i=Math.floor(Math.random()*2);
+	var locf;var locb;var loc="left";
+	if(user==0){locf="right";locb="left"}else if(user==1){locf="left";locb="right"}else{}
+	timeoutID = setTimeout(() => {
+	   appendChat(loc,"img/tjf.jpg",strCOW[i])
+	}, 0)
+	timeoutID = setTimeout(() => {
+	   appendChat(locf,"img/2.jpg","?")
+	}, 1000)
+	timeoutID = setTimeout(() => {
+	   appendChat(locb,"img/1.jpg","?")
+	}, 1100)
+	timeoutID = setTimeout(() => {
+	   appendChat(loc,"img/kalie.jpg","草")
+	}, 1500)
+	timeoutID = setTimeout(() => {
+	   appendChat(loc,"img/zhushu.jpg","好恶心")
+	}, 2500)
+	timeoutID = setTimeout(() => {
+	   appendChat(loc,"img/yun.jpg","性骚扰了属于是")
+	}, 3500)
+	timeoutID = setTimeout(() => {
+	   appendChat(loc,"img/gugugu.jpg","我看不懂,但我大受震撼")
+	}, 4500)
+	timeoutID = setTimeout(() => {
+	   appendChat(loc,"img/luren.jpg","我是来看热闹的");
+	}, 5500)
 }
 
 /**
