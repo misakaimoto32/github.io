@@ -83,6 +83,16 @@ function appendChat(position, imgSrc, text){
         </div>
     `)
 }
+/*
+*发送图片
+*/
+
+function appendChatImg(position,imgSrc,msgimgSrc){
+	let srcstr="<img src=\""+msgimgSrc+"\" width=\"250px\" hight=\"250px\"/>"
+	appendChat(position,imgSrc,srcstr);
+}
+
+
 /**
  * 发送信息按钮被点击
  */
@@ -121,26 +131,21 @@ async function COW(){
     btn.style.display = "none"; 
 
 	let strCOW = ["我想要法姐姐如石楠花般洁白如钻石般闪耀的小！橡！皮！", "一拳打进法姐姐批里面"]
-	let locf, locb;
+	let locf="left", locb="left";
 	if(user == 0){
         locf = "right";
-        locb = "left"
     }else if(user == 1){
         locf = "left";
-        locb = "right";
-    }else{
-        locf = "left";
-        locb = "left";
     }
-
+	
     appendChat("left", "img/tjf.jpg", strCOW[Math.floor(Math.random() * strCOW.length)]);
     scrollBottom();
 
-    await sleep((Math.round(Math.random() * (2.5 - 0.5)) + 0.5) * 1000);
+    await sleep((Math.round(Math.random() * (0.6 - 0.5)) + 0.5) * 1000);
     appendChat(locf, "img/2.jpg", "?");
     scrollBottom();
 
-    await sleep((Math.round(Math.random() * (2.5 - 0.5)) + 0.5) * 1000);
+    await sleep((Math.round(Math.random() * (0.6 - 0.5)) + 0.5) * 1000);
     appendChat(locb, "img/1.jpg", "?");
     scrollBottom();
 
@@ -149,7 +154,7 @@ async function COW(){
     scrollBottom();
 
     await sleep((Math.round(Math.random() * (2.5 - 0.5)) + 0.5) * 1000);
-    appendChat("left", "img/gugugu.jpg", "我看不懂,但我大受震撼");
+    appendChatImg("left", "img/gugugu.jpg", "img/amazing.jpg");
     scrollBottom();
 
     await sleep((Math.round(Math.random() * (2.5 - 0.5)) + 0.5) * 1000);
@@ -195,5 +200,6 @@ function scrollBottom(){
 (function main(){
     addUsers()
     changeUser(0)
+	COW()
 })()
 
