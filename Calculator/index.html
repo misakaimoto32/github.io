@@ -6,6 +6,35 @@
 		<link rel="stylesheet" type="text/css" href="css/style1.css"/>
 		<script src="js/jquery-3.3.1.min.js"></script>
 		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+		<script>
+			function showtime(){
+			 let date=new Date();//创建一个日期对象的实例。这句代码这样理解,new代表创建，Date是一个时间对象，连起来就是创建对象，并用变量date接收，实例就是一个实实在在的东西，比如：老师让你去帮他拿一个文件，结果你的同桌去了，你们两呢都属于人这个对象，所以你拿和他拿都一样。
+			 console.log(date);//在控制台输出date的值
+			 let year=date.getFullYear();//引用了年这个方法(功能，意思是能实现什么，能干什么)getFullYear
+			 let month=date.getMonth()+1;//这里加一是因为我们观念上的月份和定义方法的月份不一样，定义方法的月份是0~11，我们观念上的月份呢是1~12，因此要加一
+			 let day=date.getDate();
+			 let hour=date.getHours();
+			 if(hour<10){
+			  hour='0'+hour;
+			 }//这里用if语句的原因是当我们的时间走到一位数字时就会出现闪动，会使整个代码混乱，为了解决这一缺点在个位数前面用拼接的方法加一个0，这样就形成了两位数，这样就不会出现闪动。分钟和秒也是一样
+			 let minute=date.getMinutes();
+			  if(minute<10){
+			  minute='0'+minute;
+			 }
+			 let second=date.getSeconds();
+			  if(second<10){
+			  second='0'+second;
+			 }
+			 let time=year+'/'+month+'/'+day+' '+hour+':'+minute+':'+second;
+			 console.log(time, $("#2"));//innerHTML是整个标签的前后里面的内容，把time里面的内容赋值到了time1中(innerHTML 指HTML开始标记和结束标记之间的内容)
+			 
+			 setTimeout(function(){
+				 $("#2").text(time);
+				 showtime();
+			 },1000);//一秒钟之后执行showTime.大家都知道，我们的HTML代码是从上往下执行的，当执行到shoutime时，会往下执行调用的函数，然后执行函数，又执行setTimeout方法，一直这样循环下去，就能实现时钟的不停跳动。
+			 }
+			 showtime();
+		</script>
 	</head>
 	<body><div class="tab">
 	<center><h1>没什么用的利率计算小工具</h1></center>
@@ -13,7 +42,8 @@
 		<ul>
 			<li class="current" id=0>计算年化率</li>
 			<li id=1>汇率换算</li>
-			<li id=2>更多功能开发中</li>
+			<li id=2>时钟</li>
+			<li id=3>更多功能开发中</li>
 		</ul>
 	</div>
 	<div class="tab_con">
@@ -70,6 +100,9 @@
 					<img src="img/wuwuwu.jpg" /> -->
 				</select>
 			</div> 
+			<div id=2 style="display: none;">
+				<p id="box">时间</p>阿哲
+			</div>
 	</div>
 	</div>
 		
