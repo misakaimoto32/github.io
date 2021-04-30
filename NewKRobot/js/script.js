@@ -200,5 +200,10 @@ function scrollBottom(){
 (function main(){
     addUsers()
     changeUser(0)
+    document.addEventListener("keydown", (e) => {
+        if(e.key == "Enter"){
+            sendMessage()
+        }
+    })
 })()
 
