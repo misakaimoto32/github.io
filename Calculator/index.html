@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>金融相关计算工具</title>
+		<link rel="stylesheet" type="text/css" href="css/style1.css"/>
+		<script src="js/jquery-3.3.1.min.js"></script>
+		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	</head>
+	<body><div class="tab">
+	<center><h1>利率计算小工具</h1></center>
+	<div class="tab_list">
+		<ul>
+			<li class="current" id=0>计算年化率</li>
+			<li id=1>货币换算器</li>
+			<li id=2>更多功能开发中</li>
+		</ul>
+	</div>
+	<div class="tab_con">
+		<div class="item" id=0 style="display: block;">
+			<form>
+			<select id="mul">
+				<option value=360>日利(首月不免息)</option>
+				<option value=330 selected> 日利（首月免息）</option>
+				<option value=12>月利</option>
+			</select>
+			<input type="text" id="rate" required="required" placeholder="利息"/>
+			<span id="type-text">%</span>
+			<select id="types">
+				<option value=0 selected>百分比</option>
+				<option value=1>金额</option>
+			</select>
+			<span class="sum">其中</span>
+			<input id="sum" placeholder="本金" type="text" class="sum"/><span class="sum">元</span>
+			<input type="button" id="start" value="开始计算"/>
+			<div id="result">
+				年化率计算结果为：
+			<input type="text" id="re" disabled="disabled" placeholder="计算失败"/>%
+			</div>
+			</form>
+			</div>
+			<div class="item" id=1 style="display: none;">
+				<!-- <input type="text" id="money1" />
+				<select id="monSel">
+					<option ></option> -->
+					还没写）头发要掉光了
+					<img src="img/wuwuwu.jpg" />
+				</select>
+			</div>
+	</div>
+	</div>
+		
+
+	</body>
+	<script>
+		let mode=$(".current").index();
+		let types=$("#types").val();
+		let mul=$("#mul").val();
+		$(".sum").hide();
+		$("#result").hide();
+		console.log($(".tab_list ul li"));
+		$(".tab_list ul li").mouseenter(function(){
+			$(".current").removeClass("current");
+			$(this).addClass("current");
+			console.log($(this));
+		});
+		$(".tab_list ul li").mouseout(function(){
+			let lis=".tab_list ul li:eq("+mode+")";
+			$(".current").removeClass("current");
+			$(lis).addClass("current");
+		});
+		$(".tab_list ul li").click(function(){
+			if($(this).prop("id")==2)return;
+			mode=$(this).index();
+			$(".item").hide();
+			$(".item").eq(mode).show();
+		});
+		$("#types").change(function(){
+			types=$(this).val();
+			if(types==0){$("#type-text").text("%");$(".sum").hide()}
+			else
+			{
+				$("#type-text").text("元");
+				$(".sum").show();
+			}
+			});
+		$("#mul").change(function(){
+			mul=$(this).val();
+		})
+		$("#start").click(function(){
+			if(types==0){
+				if(isNaN(parseFloat($("#rate").val()))){$("#rate").val("");alert("???啊这？",history.go(-1));return}
+				let rates=parseFloat($("#rate").val())/100 + 1
+				$("#re").val(Math.pow(rates,mul)-1);
+				$("#result").show();
+				console.log(rates);
+			}
+			else
+			{
+				if(isNaN(parseFloat($("#rate").val())) || isNaN(parseFloat($("#sum").val()))){alert("???啊这？",history.go(-1));$("#rate").val("");$("#sum").val("");}
+				let raxs=parseFloat($("#rate").val());let base=parseFloat($("#sum").val());
+				console.log(base);
+				let ratess=raxs/base+1;
+				$("#re").val(Math.pow(ratess,mul)-1);
+				$("#result").show();
+				console.log(ratess);
+			}
+		
+		});
+	</script>
+</html>
