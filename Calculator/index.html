@@ -8,7 +8,7 @@
 		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 		<script>
 			function showtime(){
-			 let date=new Date();//创建一个日期对象的实例。这句代码这样理解,new代表创建，Date是一个时间对象，连起来就是创建对象，并用变量date接收，实例就是一个实实在在的东西，比如：老师让你去帮他拿一个文件，结果你的同桌去了，你们两呢都属于人这个对象，所以你拿和他拿都一样。
+			 let date=new Date($.ajax({async: false}).getResponseHeader("Date"));//创建一个日期对象的实例。这句代码这样理解,new代表创建，Date是一个时间对象，连起来就是创建对象，并用变量date接收，实例就是一个实实在在的东西，比如：老师让你去帮他拿一个文件，结果你的同桌去了，你们两呢都属于人这个对象，所以你拿和他拿都一样。
 			 console.log(date);//在控制台输出date的值
 			 let year=date.getFullYear();//引用了年这个方法(功能，意思是能实现什么，能干什么)getFullYear
 			 let month=date.getMonth()+1;//这里加一是因为我们观念上的月份和定义方法的月份不一样，定义方法的月份是0~11，我们观念上的月份呢是1~12，因此要加一
