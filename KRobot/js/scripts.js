@@ -24,9 +24,9 @@ function change() {
 }
 //发送事件
 function sent() {
+	console.log(oTxt);
     if (!oTxt.value) return;
     if (oTxt.value.toUpperCase() == "COW") { COW(); oTxt.value = ''; return; }
-    console.log(oTxt.value);
     addCon();
     oTxt.focus();
 }
