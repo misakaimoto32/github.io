@@ -88,7 +88,7 @@ function appendChat(position, imgSrc, text){
 */
 
 function appendChatImg(position,imgSrc,msgimgSrc){
-	let srcstr="<img src=\""+msgimgSrc+"\" width=\"250px\" hight=\"250px\"/>"
+	let srcstr="<img src=\""+msgimgSrc+"\" width=\"150px\" hight=\"150px\"/>"
 	appendChat(position,imgSrc,srcstr);
 }
 
@@ -149,27 +149,27 @@ async function COW(){
     appendChat(locb, "img/1.jpg", "?");
     scrollBottom();
 
-    await sleep((Math.round(Math.random() * (2.5 - 0.5)) + 0.5) * 1000);
+    await sleep((Math.round(Math.random() * (1.0 - 0.5)) + 0.5) * 1000);
     appendChat("left", "img/kalie.jpg", "草");
     scrollBottom();
 
-    await sleep((Math.round(Math.random() * (2.5 - 0.5)) + 0.5) * 1000);
+    await sleep((Math.round(Math.random() * (1.0 - 0.5)) + 0.5) * 1000);
     appendChatImg("left", "img/gugugu.jpg", "img/amazing.jpg");
     scrollBottom();
 
-    await sleep((Math.round(Math.random() * (2.5 - 0.5)) + 0.5) * 1000);
+    await sleep((Math.round(Math.random() * (1.0 - 0.5)) + 0.5) * 1000);
     appendChat("left", "img/zhushu.jpg", "好恶心");
     scrollBottom();
 
-    await sleep((Math.round(Math.random() * (2.5 - 0.5)) + 0.5) * 1000);
+    await sleep((Math.round(Math.random() * (1.0 - 0.5)) + 0.5) * 1000);
     appendChat("left", "img/klee.jpg", "🐮🍺");
     scrollBottom();
 
-    await sleep((Math.round(Math.random() * (2.5 - 0.5)) + 0.5) * 1000);
+    await sleep((Math.round(Math.random() * (1.0 - 0.5)) + 0.5) * 1000);
     appendChat("left", "img/yun.jpg", "性骚扰了属于是");
     scrollBottom();
 
-    await sleep((Math.round(Math.random() * (2.5 - 0.5)) + 0.5) * 1000);
+    await sleep((Math.round(Math.random() * (1.0 - 0.5)) + 0.5) * 1000);
     appendChat("left", "img/luren.jpg", "我是来看热闹的");
     scrollBottom();
 
@@ -200,6 +200,5 @@ function scrollBottom(){
 (function main(){
     addUsers()
     changeUser(0)
-	COW()
 })()
 
