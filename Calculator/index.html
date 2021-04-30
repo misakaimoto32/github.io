@@ -26,10 +26,10 @@
 			  second='0'+second;
 			 }
 			 let time=year+'/'+month+'/'+day+' '+hour+':'+minute+':'+second;
-			 console.log(time, $("#2"));//innerHTML是整个标签的前后里面的内容，把time里面的内容赋值到了time1中(innerHTML 指HTML开始标记和结束标记之间的内容)
+			 console.log(time, $(".item.current #2"));//innerHTML是整个标签的前后里面的内容，把time里面的内容赋值到了time1中(innerHTML 指HTML开始标记和结束标记之间的内容)
 			 
 			 setTimeout(function(){
-				 $("#2").text(time);
+				 $("#time").text(time);
 				 showtime();
 			 },1000);//一秒钟之后执行showTime.大家都知道，我们的HTML代码是从上往下执行的，当执行到shoutime时，会往下执行调用的函数，然后执行函数，又执行setTimeout方法，一直这样循环下去，就能实现时钟的不停跳动。
 			 }
@@ -37,12 +37,13 @@
 		</script>
 	</head>
 	<body><div class="tab">
+	<div id="time" style="border-style: inset; border: 15px 0; width: auto;"></div>
 	<center><h1>没什么用的利率计算小工具</h1></center>
 	<div class="tab_list">
 		<ul>
 			<li class="current" id=0>计算年化率</li>
 			<li id=1>汇率换算</li>
-			<li id=2>时钟</li>
+			<li id=2>对冲函数</li>
 			<li id=3>更多功能开发中</li>
 		</ul>
 	</div>
@@ -80,8 +81,7 @@
 					<option value=0.8323>港元</option>
 					<option value=5.0191>澳元</option>
 					<option value=1>人民币</option>
-					<!-- 还没写）头发要掉光了
-					<img src="img/wuwuwu.jpg" /> -->
+					
 				</select>
 				<br />
 				相当于
@@ -96,12 +96,12 @@
 					<option value=0.8323>港元</option>
 					<option value=5.0191>澳元</option>
 					<option value=1 selected>人民币</option>
-					<!-- 还没写）头发要掉光了
-					<img src="img/wuwuwu.jpg" /> -->
 				</select>
 			</div> 
-			<div id=2 style="display: none;">
-				<p id="box">时间</p>阿哲
+			<div class="item" id=2 style="display: none;">
+				<p id="time"></p>
+				还没写）头发要掉光了
+				<img src="img/wuwuwu.jpg" />
 			</div>
 	</div>
 	</div>
