@@ -12,7 +12,7 @@
 	<div class="tab_list">
 		<ul>
 			<li class="current" id=0>计算年化率</li>
-			<li id=1>货币换算器</li>
+			<li id=1>汇率换算</li>
 			<li id=2>更多功能开发中</li>
 		</ul>
 	</div>
@@ -40,11 +40,34 @@
 			</form>
 			</div>
 			<div class="item" id=1 style="display: none;">
-				<!-- <input type="text" id="money1" />
-				<select id="monSel">
-					<option ></option> -->
-					还没写）头发要掉光了
-					<img src="img/wuwuwu.jpg" />
+				<input type="text" id="money1" />
+				<select id="monSel1">
+					<option value=6.4662 selected>美元</option>
+					<option value=0.05945>日元</option>
+					<option value=7.815>欧元</option>
+					<option value=8.9997>英镑</option>
+					<option value=0.005804>韩元</option>
+					<option value=0.8323>港元</option>
+					<option value=5.0191>澳元</option>
+					<option value=1>人民币</option>
+					<!-- 还没写）头发要掉光了
+					<img src="img/wuwuwu.jpg" /> -->
+				</select>
+				<br />
+				相当于
+				<br />
+				<input type="text" id="money2" />
+				<select id="monSel2">
+					<option value=6.4662>美元</option>
+					<option value=0.05945>日元</option>
+					<option value=7.815>欧元</option>
+					<option value=8.9997>英镑</option>
+					<option value=0.005804>韩元</option>
+					<option value=0.8323>港元</option>
+					<option value=5.0191>澳元</option>
+					<option value=1 selected>人民币</option>
+					<!-- 还没写）头发要掉光了
+					<img src="img/wuwuwu.jpg" /> -->
 				</select>
 			</div> 
 	</div>
@@ -56,6 +79,8 @@
 		let mode=$(".current").index();
 		let types=$("#types").val();
 		let mul=$("#mul").val();
+		let monmul1=$("#monSel1").val();
+		let monmul2=$("#monSel2").val();
 		$(".sum").hide();
 		$("#result").hide();
 		console.log($(".tab_list ul li"));
@@ -70,7 +95,7 @@
 			$(lis).addClass("current");
 		});
 		$(".tab_list ul li").click(function(){
-			if($(this).prop("id")==2)return;
+			if($(this).prop("id")==$(".tab_list ul li").length-1)return;
 			mode=$(this).index();
 			$(".item").hide();
 			$(".item").eq(mode).show();
@@ -105,7 +130,18 @@
 				$("#result").show();
 				console.log(ratess);
 			}
-		
+		});
+		$("#monSel1").change(function(){
+			monmul1=$(this).val();
+			let sum1=parseFloat($("#money1").val());
+			if(isNaN(sum1)){return}
+			else $("#money2").val(sum1*monmul1/monmul2);
+		});
+		$("#monSel2").change(function(){
+			monmul2=$(this).val();
+			let sum2=parseFloat($("#money2").val());
+			if(isNaN(sum2)){return}
+			else $("#money1").val(sum2*monmul2/monmul1);
 		});
 	</script>
 </html>
