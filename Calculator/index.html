@@ -1,74 +1,50 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title>金融相关计算工具</title>
-		<link rel="stylesheet" type="text/css" href="css/style1.css"/>
-		<script src="js/jquery-3.3.1.min.js"></script>
-		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-		<script>
-			function showtime(){
-			 let date=new Date($.ajax({async: false}).getResponseHeader("Date"));//创建一个日期对象的实例。这句代码这样理解,new代表创建，Date是一个时间对象，连起来就是创建对象，并用变量date接收，实例就是一个实实在在的东西，比如：老师让你去帮他拿一个文件，结果你的同桌去了，你们两呢都属于人这个对象，所以你拿和他拿都一样。
-			 console.log(date);//在控制台输出date的值
-			 let year=date.getFullYear();//引用了年这个方法(功能，意思是能实现什么，能干什么)getFullYear
-			 let month=date.getMonth()+1;//这里加一是因为我们观念上的月份和定义方法的月份不一样，定义方法的月份是0~11，我们观念上的月份呢是1~12，因此要加一
-			 let day=date.getDate();
-			 let hour=date.getHours();
-			 if(hour<10){
-			  hour='0'+hour;
-			 }//这里用if语句的原因是当我们的时间走到一位数字时就会出现闪动，会使整个代码混乱，为了解决这一缺点在个位数前面用拼接的方法加一个0，这样就形成了两位数，这样就不会出现闪动。分钟和秒也是一样
-			 let minute=date.getMinutes();
-			  if(minute<10){
-			  minute='0'+minute;
-			 }
-			 let second=date.getSeconds();
-			  if(second<10){
-			  second='0'+second;
-			 }
-			 let time=year+'/'+month+'/'+day+' '+hour+':'+minute+':'+second;
-			 console.log(time, $(".item.current #2"));//innerHTML是整个标签的前后里面的内容，把time里面的内容赋值到了time1中(innerHTML 指HTML开始标记和结束标记之间的内容)
-			 
-			 setTimeout(function(){
-				 $("#time").text(time);
-				 showtime();
-			 },1000);//一秒钟之后执行showTime.大家都知道，我们的HTML代码是从上往下执行的，当执行到shoutime时，会往下执行调用的函数，然后执行函数，又执行setTimeout方法，一直这样循环下去，就能实现时钟的不停跳动。
-			 }
-			 showtime();
-		</script>
-	</head>
-	<body><div class="tab">
-	<div id="time" style="border-style: inset; border: 15px 0; width: auto;"></div>
-	<center><h1>没什么用的利率计算小工具</h1></center>
-	<div class="tab_list">
-		<ul>
-			<li class="current" id=0>计算年化率</li>
-			<li id=1>汇率换算</li>
-			<li id=2>对冲函数</li>
-			<li id=3>更多功能开发中</li>
-		</ul>
-	</div>
-	<div class="tab_con">
-		<div class="item" id=0 style="display: block;">
-			<form>
-			<select id="mul">
-				<option value=360>日利(首月不免息)</option>
-				<option value=330 selected> 日利（首月免息）</option>
-				<option value=12>月利</option>
-			</select>
-			<input type="text" id="rate" required="required" placeholder="利息"/>
-			<span id="type-text">%</span>
-			<select id="types">
-				<option value=0 selected>百分比</option>
-				<option value=1>金额</option>
-			</select>
-			<span class="sum">其中</span>
-			<input id="sum" placeholder="本金" type="text" class="sum"/><span class="sum">元</span>
-			<input type="button" id="start" value="开始计算"/>
-			<div id="result">
-				年化率计算结果为：
-			<input type="text" id="re" disabled="disabled" placeholder="计算失败"/>%
-			</div>
-			</form>
+
+<head>
+	<meta charset="utf-8">
+	<title>金融相关计算工具</title>
+	<link rel="stylesheet" type="text/css" href="css/style1.css" />
+	<script src="js/jquery-3.3.1.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+</head>
+
+<body>
+	<div class="tab">
+		<div id="time" style="border-style: inset; border: 15px 0; width: auto;"></div>
+		<center>
+			<h1>没什么用的利率计算小工具</h1>
+		</center>
+		<div class="tab_list">
+			<ul>
+				<li class="current" id=0>计算年化率</li>
+				<li id=1>汇率换算</li>
+				<li id=2>对冲函数</li>
+				<li id=3>更多功能开发中</li>
+			</ul>
+		</div>
+		<div class="tab_con">
+			<div class="item" id=0 style="display: block;">
+				<form>
+					<select id="mul">
+						<option value=360>日利(首月不免息)</option>
+						<option value=330 selected> 日利（首月免息）</option>
+						<option value=12>月利</option>
+					</select>
+					<input type="text" id="rate" required="required" placeholder="利息" />
+					<span id="type-text">%</span>
+					<select id="types">
+						<option value=0 selected>百分比</option>
+						<option value=1>金额</option>
+					</select>
+					<span class="sum">其中</span>
+					<input id="sum" placeholder="本金" type="text" class="sum" /><span class="sum">元</span>
+					<input type="button" id="start" value="开始计算" />
+					<div id="result">
+						年化率计算结果为：
+						<input type="text" id="re" disabled="disabled" placeholder="计算失败" />%
+					</div>
+				</form>
 			</div>
 			<div class="item" id=1 style="display: none;">
 				<input type="text" id="money1" />
@@ -81,7 +57,7 @@
 					<option value=0.8323>港元</option>
 					<option value=5.0191>澳元</option>
 					<option value=1>人民币</option>
-					
+
 				</select>
 				<br />
 				相当于
@@ -97,84 +73,140 @@
 					<option value=5.0191>澳元</option>
 					<option value=1 selected>人民币</option>
 				</select>
-			</div> 
+			</div>
 			<div class="item" id=2 style="display: none;">
 				<p id="time"></p>
 				还没写）头发要掉光了
 				<img src="img/wuwuwu.jpg" />
 			</div>
+		</div>
 	</div>
-	</div>
-		
 
-	</body>
-	<script>
-		let mode=$(".current").index();
-		let types=$("#types").val();
-		let mul=$("#mul").val();
-		let monmul1=$("#monSel1").val();
-		let monmul2=$("#monSel2").val();
-		$(".sum").hide();
-		$("#result").hide();
-		console.log($(".tab_list ul li"));
-		$(".tab_list ul li").mouseenter(function(){
-			$(".current").removeClass("current");
-			$(this).addClass("current");
-			console.log($(this));
-		});
-		$(".tab_list ul li").mouseout(function(){
-			let lis=".tab_list ul li:eq("+mode+")";
-			$(".current").removeClass("current");
-			$(lis).addClass("current");
-		});
-		$(".tab_list ul li").click(function(){
-			if($(this).prop("id")==$(".tab_list ul li").length-1)return;
-			mode=$(this).index();
-			$(".item").hide();
-			$(".item").eq(mode).show();
-		});
-		$("#types").change(function(){
-			types=$(this).val();
-			if(types==0){$("#type-text").text("%");$(".sum").hide()}
-			else
-			{
-				$("#type-text").text("元");
-				$(".sum").show();
-			}
-			});
-		$("#mul").change(function(){
-			mul=$(this).val();
-		})
-		$("#start").click(function(){
-			if(types==0){
-				if(isNaN(parseFloat($("#rate").val()))){$("#rate").val("");alert("???啊这？",history.go(-1));return}
-				let rates=parseFloat($("#rate").val())/100 + 1
-				$("#re").val(Math.pow(rates,mul)-1);
-				$("#result").show();
-				console.log(rates);
-			}
-			else
-			{
-				if(isNaN(parseFloat($("#rate").val())) || isNaN(parseFloat($("#sum").val()))){alert("???啊这？",history.go(-1));$("#rate").val("");$("#sum").val("");}
-				let raxs=parseFloat($("#rate").val());let base=parseFloat($("#sum").val());
-				console.log(base);
-				let ratess=raxs/base+1;
-				$("#re").val(Math.pow(ratess,mul)-1);
-				$("#result").show();
-				console.log(ratess);
-			}
-		});
-		$("#monSel1").change(function(){
-			monmul1=$(this).val();
-			let sum1=parseFloat($("#money1").val());
-			if(isNaN(sum1)){return}
-			else $("#money2").val(sum1*monmul1/monmul2);
-		});
-		$("#monSel2").change(function(){
-			monmul2=$(this).val();
-			let sum2=parseFloat($("#money2").val());
-			if(isNaN(sum2)){return}
-			else $("#money1").val(sum2*monmul2/monmul1);
-		});
-	</script>
+
+</body>
+<script>
+	//function showtime() {
+	//	let date = new Date();//创建一个日期对象的实例。这句代码这样理解,new代表创建，Date是一个时间对象，连起来就是创建对象，并用变量date接收，实例就是一个实实在在的东西，比如：老师让你去帮他拿一个文件，结果你的同桌去了，你们两呢都属于人这个对象，所以你拿和他拿都一样。
+	//	console.log(date);//在控制台输出date的值
+	//	let year = date.getFullYear();//引用了年这个方法(功能，意思是能实现什么，能干什么)getFullYear
+	//	let month = date.getMonth() + 1;//这里加一是因为我们观念上的月份和定义方法的月份不一样，定义方法的月份是0~11，我们观念上的月份呢是1~12，因此要加一
+	//	let day = date.getDate();
+	//	let hour = date.getHours();
+	//	if (hour < 10) {
+	//		hour = '0' + hour;
+	//	}//这里用if语句的原因是当我们的时间走到一位数字时就会出现闪动，会使整个代码混乱，为了解决这一缺点在个位数前面用拼接的方法加一个0，这样就形成了两位数，这样就不会出现闪动。分钟和秒也是一样
+	//	let minute = date.getMinutes();
+	//	if (minute < 10) {
+	//		minute = '0' + minute;
+	//	}
+	//	let second = date.getSeconds();
+	//	if (second < 10) {
+	//		second = '0' + second;
+	//	}
+	//	let time = year + '/' + month + '/' + day + ' ' + hour + ':' + minute + ':' + second;
+	//	console.log(time, $(".item.current #2"));//innerHTML是整个标签的前后里面的内容，把time里面的内容赋值到了time1中(innerHTML 指HTML开始标记和结束标记之间的内容)
+
+	//	setTimeout(function () {
+	//		$("#time").text(time);
+	//		showtime();
+	//	}, 1000);//一秒钟之后执行showTime.大家都知道，我们的HTML代码是从上往下执行的，当执行到shoutime时，会往下执行调用的函数，然后执行函数，又执行setTimeout方法，一直这样循环下去，就能实现时钟的不停跳动。
+	//}
+
+	function showtime(){
+		let timeNow = new Date()
+		//获取年
+		let year = timeNow.getFullYear()
+		//获取月
+		let mon = timeNow.getMonth()
+		mon = mon < 10 ? "0" + mon : mon
+		//获取日
+		let day = timeNow.getDate()
+		day = day < 10 ? "0" + day : day
+		//获取时
+		let h = timeNow.getHours()
+		h = h < 10 ? "0" + h : h
+		//获取分
+		let m = timeNow.getMinutes()
+		m = m < 10 ? "0" + m : m
+		//获取秒
+		let s = timeNow.getSeconds()
+		s = s < 10 ? "0" + s : s
+		//写入HTML
+		$("#time").text(`${year}/${mon}/${day} ${h}:${m}:${s}`)
+	}
+	//进入网页先调用一次函数显示时间
+	showtime()
+	//然后每秒更新一次时间
+	//setInterval为周期函数，以毫秒计来调用函数或计算表达式
+	let nowTime = setInterval(showtime, 1000)
+
+</script>
+<script>
+	let mode = $(".current").index();
+	let types = $("#types").val();
+	let mul = $("#mul").val();
+	let monmul1 = $("#monSel1").val();
+	let monmul2 = $("#monSel2").val();
+	$(".sum").hide();
+	$("#result").hide();
+	console.log($(".tab_list ul li"));
+	$(".tab_list ul li").mouseenter(function () {
+		$(".current").removeClass("current");
+		$(this).addClass("current");
+		console.log($(this));
+	});
+	$(".tab_list ul li").mouseout(function () {
+		let lis = ".tab_list ul li:eq(" + mode + ")";
+		$(".current").removeClass("current");
+		$(lis).addClass("current");
+	});
+	$(".tab_list ul li").click(function () {
+		if ($(this).prop("id") == $(".tab_list ul li").length - 1) return;
+		mode = $(this).index();
+		$(".item").hide();
+		$(".item").eq(mode).show();
+	});
+	$("#types").change(function () {
+		types = $(this).val();
+		if (types == 0) { $("#type-text").text("%"); $(".sum").hide() }
+		else {
+			$("#type-text").text("元");
+			$(".sum").show();
+		}
+	});
+	$("#mul").change(function () {
+		mul = $(this).val();
+	})
+	$("#start").click(function () {
+		if (types == 0) {
+			if (isNaN(parseFloat($("#rate").val()))) { $("#rate").val(""); alert("???啊这？", history.go(-1)); return }
+			let rates = parseFloat($("#rate").val()) / 100 + 1
+			$("#re").val(Math.pow(rates, mul) - 1);
+			$("#result").show();
+			console.log(rates);
+		}
+		else {
+			if (isNaN(parseFloat($("#rate").val())) || isNaN(parseFloat($("#sum").val()))) { alert("???啊这？", history.go(-1)); $("#rate").val(""); $("#sum").val(""); }
+			let raxs = parseFloat($("#rate").val()); let base = parseFloat($("#sum").val());
+			console.log(base);
+			let ratess = raxs / base + 1;
+			$("#re").val(Math.pow(ratess, mul) - 1);
+			$("#result").show();
+			console.log(ratess);
+		}
+	});
+	$("#monSel1").change(function () {
+		monmul1 = $(this).val();
+		let sum1 = parseFloat($("#money1").val());
+		if (isNaN(sum1)) { return }
+		else $("#money2").val(sum1 * monmul1 / monmul2);
+	});
+	$("#monSel2").change(function () {
+		monmul2 = $(this).val();
+		let sum2 = parseFloat($("#money2").val());
+		if (isNaN(sum2)) { return }
+		else $("#money1").val(sum2 * monmul2 / monmul1);
+	});
+</script>
+
 </html>
