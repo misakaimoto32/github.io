@@ -130,7 +130,7 @@ async function COW(){
     let btn = document.getElementById("input-button")
     btn.style.display = "none"; 
 
-	let strCOW = ["我想要法姐姐如石楠花般洁白如钻石般闪耀的小！橡！皮！", "一拳打进法姐姐批里面"]
+	let strCOW = ["我想要法姐姐如石楠花般洁白如钻石般闪耀的小！橡！皮！", "一拳打进法姐姐批里面","想看我的牛子？我的牛子在法姐姐批里，看不了👋🏻"]
 	let locf="left", locb="left";
 	if(user == 0){
         locf = "right";
@@ -149,27 +149,27 @@ async function COW(){
     appendChat(locb, "img/1.jpg", "?");
     scrollBottom();
 
-    await sleep((Math.round(Math.random() * (1.0 - 0.5)) + 0.5) * 1000);
+    await sleep((Math.round(Math.random() * (1.5 - 0.5)) + 0.5) * 1000);
     appendChat("left", "img/kalie.jpg", "草");
     scrollBottom();
 
-    await sleep((Math.round(Math.random() * (1.0 - 0.5)) + 0.5) * 1000);
-    appendChatImg("left", "img/gugugu.jpg", "img/amazing.jpg");
-    scrollBottom();
-
-    await sleep((Math.round(Math.random() * (1.0 - 0.5)) + 0.5) * 1000);
+    await sleep((Math.round(Math.random() * (1.5 - 0.5)) + 0.5) * 1000);
     appendChat("left", "img/zhushu.jpg", "好恶心");
     scrollBottom();
 
-    await sleep((Math.round(Math.random() * (1.0 - 0.5)) + 0.5) * 1000);
-    appendChat("left", "img/klee.jpg", "🐮🍺");
-    scrollBottom();
-
-    await sleep((Math.round(Math.random() * (1.0 - 0.5)) + 0.5) * 1000);
+    await sleep((Math.round(Math.random() * (1.5 - 0.5)) + 0.5) * 1000);
     appendChat("left", "img/yun.jpg", "性骚扰了属于是");
     scrollBottom();
 
-    await sleep((Math.round(Math.random() * (1.0 - 0.5)) + 0.5) * 1000);
+    await sleep((Math.round(Math.random() * (1.5 - 0.5)) + 0.5) * 1000);
+    appendChat("left", "img/klee.jpg", "🐮🍺");
+    scrollBottom();
+
+    await sleep((Math.round(Math.random() * (1.5 - 0.5)) + 0.5) * 1000);
+    appendChatImg("left", "img/gugugu.jpg", "img/amazing.jpg");
+    scrollBottom();
+
+    await sleep((Math.round(Math.random() * (1.8 - 0.5)) + 0.5) * 1000);
     appendChat("left", "img/luren.jpg", "我是来看热闹的");
     scrollBottom();
 
