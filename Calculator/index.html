@@ -42,10 +42,29 @@
 		<ul>
 			<li class="current" id=0>计算年化率</li>
 			<li id=1>汇率换算</li>
-			<li id=2>对冲函数</li>
+			<li id=2>BTC比特币对冲比率
+			</li>
 			<li id=3>更多功能开发中</li>
 		</ul>
+		
 	</div>
+	<ul class="nav">
+	  <li value=7 class="nave">
+	    7天
+	  </li>
+	  <li value=14>
+	   14天
+	  </li>
+	  <li value=30>
+	    30天
+	  </li>
+	  <li value=60>
+		  60天
+	  </li>
+	  <li value=90>
+		  90天
+	  </li>
+	</ul>
 	<div class="tab_con">
 		<div class="item" id=0 style="display: block;">
 			<form>
@@ -171,8 +190,27 @@
 				</select>
 			</div>
 			<div class="item" id=2 style="display: none;">
-				<p id="time"></p>
-				还没写）头发要掉光了
+			<table>
+			  <thead>
+				  <tr>
+				  	<th colspan="6" id="delta">delta=</th>
+				  </tr>
+			    <tr>
+			      <th>编号</th>
+			      <th>开盘价</th>
+			      <th>收盘价</th>
+			      <th>峰值</th>
+			      <th>最低值</th>
+			      <th>总数</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+				  <tr><td colspan="6">网络连接失败，请开启代理后重试</td></tr>
+			  </tbody>
+			  </table>
+			</div>
+			<div class="item" id=3 style="display: none;">
+				头发要掉光了
 				<img src="img/wuwuwu.jpg" />
 			</div>
 		</div>
@@ -180,19 +218,49 @@
 
 	</body>
 	<script>
+		
+		
+		//变量库
 		let mode=$(".current").index();
 		let types=$("#types").val();
 		let mul=$("#mul").val();
 		let monmul1=$("#monSel1").val();
 		let monmul2=$("#monSel2").val();
+		let fix=4;
+		let days=7;
+		let BTC=Array();
+		let Concarct=Array();
+		let BTC_data=Array();
+		// let BTC_data={
+		// ["id":1619798400,"open":59480.5,"close":60143.3,"low":58538.96,"high":60751.99,"amount":33766.1646981174066088971241378617979870094,"vol":20186474,"count":240020],
+		// ["id":1619798400,"open":59480.5,"close":60143.3,"low":58538.96,"high":60751.99,"amount":33766.1646981174066088971241378617979870094,"vol":20186474,"count":240020],
+		// }
+		
+		let Concarct_data=Array();
+		// let Concarct_data={
+		// 	"id":1619798100,"open":59480.5,"close":60143.3,"low":58538.96,"high":60751.99,"amount":33766.1646981174066088971241378617979870094,"vol":20186474,"count":240020
+		// }
+		let BTC_ratestd;
+		let Concarct_ratestd;
+		let delta;
+		
+		console.log(BTC_data[1]);
+		//开始执行函数
 		$(".sum").hide();
 		$("#result").hide();
 		$("#money1").val(1);
 		getRate(monmul1,monmul2);
+		getBTC(2000);
+		getContarct(2000);
+		drawTable(30);
+		
+		
+		//侦听器注册
+		
+		//年化率计算
 		$(".tab_list ul li").mouseenter(function(){
 			$(".current").removeClass("current");
 			$(this).addClass("current");
-			console.log($(this));
 		});
 		$(".tab_list ul li").mouseout(function(){
 			let lis=".tab_list ul li:eq("+mode+")";
@@ -200,10 +268,25 @@
 			$(lis).addClass("current");
 		});
 		$(".tab_list ul li").click(function(){
-			if($(this).prop("id")==$(".tab_list ul li").length-1)return;
 			mode=$(this).index();
 			$(".item").hide();
 			$(".item").eq(mode).show();
+			if(mode==2)$(".nav").show();else $(".nav").hide();
+		});
+		$(".nav li").mouseenter(function(){
+			$(".nave").removeClass("nave");
+			$(this).addClass("nave");
+		})
+		$(".nav li").mouseout(function(){
+			$(".nave").removeClass("nave");
+			$("[value="+days+"]").addClass("nave");
+			
+		});
+		$(".nav li").click(function(){
+			days=$(this).val();
+			$(".nave").removeClass("nave");
+			$("[value="+days+"]").addClass("nave");
+			
 		});
 		$("#types").change(function(){
 			types=$(this).val();
@@ -234,6 +317,7 @@
 				$("#result").show();
 			}
 		});
+		
 		//汇率换算
 		$("#monSel1").change(function(){
 			monmul1=$("#monSel1").val();
@@ -249,5 +333,81 @@
 		$("#money1").blur(function(){
 			getRate(monmul1,monmul2)
 		});
+		
+		
+		//函数
+		
+		
+		//计算标准差的函数
+		function std(arr,fix,flag){
+			let sd,ave,sum=0;sums=0;len=arr.length;
+			for(let i=0;i<len;i++){
+				sum=Number(arr[i])
+			}
+			ave=sum/len;
+			for(let i=1;i<len;i++){
+				sums=(Number(arr[i])-ave)*(Number(arr[i])-ave)
+			}if(flag)
+			sd=(Math.sqrt(sums/len)).toFixed(fix);else sd=(Math.sqrt(sums/len));
+			return sd;
+			}
+			
+			//获取BTC数组
+			function getBTC(size){
+				fetch(`https://api.huobi.pro/market/history/kline?symbol=btcusdt&period=1day&size=${size}`).then(res=>res.json()).then(data=>
+				{
+					BTC_data=data;
+					for(let i=0;i<size;i++){
+						BTC=data.data[i]["close"];
+						}
+						
+				})
+			}
+			
+			//获取期货数组
+			function getContarct(size){
+				fetch(`https://api.hbdm.com/market/history/kline?symbol=BTC_CQ&period=1day&size=${size}`).then(res=>res.json()).then(data=>
+				{ Concarct_data=data;
+					for( let i=0;i<size;i++){
+					Concarct=data.data[i]["close"];
+					}
+					Concarct.reverse();
+				})
+			}
+			
+			//数组求ln函数
+			function getlog(arr,fix,flag){
+				for(let i=0;i<arr.length;i++) if(flag) arr[i]=Math.log(arr[i]).toFixed(fix);else arr[i]=Math.log(arr[i]);
+				return arr;
+			}
+			
+			let a=Array(9,9,9);
+			
+			//获取收益率标准差
+			function getDelta(){
+				a=getlog(BTC,1,false);b=getlog(Concarct,1,false);
+				let c=Array(),d=Array();
+				for( let i=1;i<days;i++){
+					c.push(a[i]-a[i-1]);
+					d.push(b[i]-b[i-1]);
+				}
+				BTC_ratestd=getlog(c,1,false);
+				Concarct_ratestd=getlog(d,1,false);
+				delta=BTC_ratestd/Concarct_ratestd;
+			}
+			
+			//绘制表格
+			function drawTable(fetch){
+				if(BTC_data.length==0 || Concarct_data.length==0)return;
+				$("tbody").empty(); let max;
+				if(BTC_data.length>fetch)max=BTC_data.length;else max=fetch;
+				for(let i=0;i<max;i++){
+					console.log(BTC_data[i]["id"]);
+					$("tbody").append(
+					"<tr> <td>"+BTC_data[i]["id"]+"</td><td>"+BTC_data[i]["open"]+"</td> <td>"+BTC_data[i]["close"]+"</td> <td>"+BTC_data[i]["hight"]+"</td> <td>"+BTC_data[i]["low"]+"</td> <td>"+BTC_data[i]["count"]+"</td> </tr>"
+					)
+				}
+			}
+			
 	</script>
 </html>
