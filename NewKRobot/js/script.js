@@ -236,7 +236,7 @@ function welcome(){
 	appendChat("left","img/help.jpg","旧版机器人请点击<a style='color:red' href=\"../KRobot\">这里</a>喔");
 }
 function into(){
-	texts.value="Genshin";
+	texts.value="Genshin"; 
 }
 /**
  * 开始函数 设定初试状态
