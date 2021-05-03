@@ -90,7 +90,7 @@ function appendChat(position, imgSrc, text){
 */
 
 function appendChatImg(position,imgSrc,msgimgSrc){
-	let srcstr="<img src=\".img/"+msgimgSrc+"\" width=\"150px\" hight=\"150px\"/>"
+	let srcstr="<img src=\"img/"+msgimgSrc+"\" width=\"150px\" hight=\"150px\"/>"
 	appendChat(position,imgSrc,srcstr);
 }
 
