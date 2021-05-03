@@ -26,6 +26,8 @@ const USERS_LIST = [
 let user = 0
 //对话延迟ID
 let timeoutID;
+let flag=false;
+let texts = document.getElementById("input-input");
 
 /**
  * 添加所有可选用户
@@ -88,10 +90,9 @@ function appendChat(position, imgSrc, text){
 */
 
 function appendChatImg(position,imgSrc,msgimgSrc){
-	let srcstr="<img src=\""+msgimgSrc+"\" width=\"150px\" hight=\"150px\"/>"
+	let srcstr="<img src=\".img/"+msgimgSrc+"\" width=\"150px\" hight=\"150px\"/>"
 	appendChat(position,imgSrc,srcstr);
 }
-
 
 /**
  * 发送信息按钮被点击
@@ -105,9 +106,11 @@ async function sendMessage(){
     if(/cow/i.test(text.value)){
         text.value = "";
         COW();
-	}else{
+	}else if(/genshin/i.test(text.value)){
+		calculator();
+	}
+	else{
         appendChat("right", USERS_LIST[user].img, text.value)
-        text.value = ""
         scrollBottom()
         await sleep((Math.round(Math.random() * (2 - 1)) + 1) * 1000)
         kurukoReply()
@@ -166,7 +169,7 @@ async function COW(){
     scrollBottom();
 
     await sleep((Math.round(Math.random() * (1.5 - 0.5)) + 0.5) * 1000);
-    appendChatImg("left", "img/gugugu.jpg", "img/amazing.jpg");
+    appendChatImg("left", "img/gugugu.jpg", "amazing.jpg");
     scrollBottom();
 
     await sleep((Math.round(Math.random() * (1.8 - 0.5)) + 0.5) * 1000);
@@ -193,13 +196,55 @@ function scrollBottom(){
     let contentBox = document.getElementById("content-box");
     contentBox.scrollTop = contentBox.scrollHeight;
 }
+/*
+*
+*/
 
+/*
+*发送输入框
+* */
+let sum=Array(4),i=0;
+function appendChatText(position,imgSrc,id,placeholder,textbef,textaf){
+	let srcstr="请输入您的"+textbef+"：<input type='text' id='"+id+"' placeholder='"+placeholder+"' /><button id='b"+id+"'>确认</button>"+textaf;
+	appendChat(position,imgSrc,srcstr);
+	document.getElementById(id).oninput=function(){
+		if(!Number(this.value)) this.value="";
+	};
+	document.getElementById("b"+id).onclick=function(){
+		if(document.getElementById(id).value=="")return
+		sum[i]=Number(document.getElementById(id).value); console.log(sum[i]); 
+		document.getElementById(id).disabled=true;this.disabled=true;
+		if(i++<4)calculator();
+	}
+}
+function calculator(){let btn = document.getElementById("input-button")
+	if(i==0){ texts.style.display="none"; btn.style.display = "none";  appendChatText("left","img/help.jpg","gj","攻击力","","");scrollBottom();};
+	if(i==1){appendChatText("left","img/help.jpg","bj","暴击率(%)","","");scrollBottom();};
+	if(i==2){appendChatText("left","img/help.jpg","bjsh","暴击伤害(%)","","");scrollBottom();};
+	if(i==3){appendChatText("left","img/help.jpg","zs","（物理、元素）伤害增伤(%)","","");};
+	if(i==4){ let sums=sum[0]*(sum[1]/100+1)*(sum[2]/100+1)*(sum[3]/100+1);
+		appendChat("left","img/help.jpg","正常状态下，不计算怪物等级抗性，不发生元素反应时的伤害期望值为："+sums.toFixed(2));scrollBottom();
+		texts.style.display="block";btn.style.display = "block"; texts.value=""
+		}
+}
+/*
+*欢迎界面
+* */
+function welcome(){
+	appendChat("left","img/help.jpg","原神伤害计算器更新啦<br>输入<a style='color:orange' onclick='into()'>\" Genshin\"</a>来计算一下角色的伤害期望值吧！<br><br><img src='img/h.jpg' width=\"150px\" hight=\"150px\"/>");
+	appendChat("left","img/help.jpg","本机器人由<a style='color:orange' href=’https://mobile.twitter.com/MisakaImoto32'>@MisakaImoto32</a>制作，感谢<a style='color:pink' href=\"https://mobile.twitter.com/DFK_KLEE\">@筱原可莉</a>、<a style='color:green' href=\"https://mobile.twitter.com/Misaka_RPC\">@御坂美琴电台🇨🇳</a>提供的技术支持！");
+	appendChat("left","img/help.jpg","旧版机器人请点击<a style='color:red' href=\"../KRobot\">这里</a>喔");
+}
+function into(){
+	texts.value="Genshin";
+}
 /**
  * 开始函数 设定初试状态
  */
 (function main(){
     addUsers()
     changeUser(0)
+	welcome();
     document.addEventListener("keydown", (e) => {
         if(e.key == "Enter"){
             sendMessage()
