@@ -26,7 +26,6 @@ const USERS_LIST = [
 let user = 0
 //对话延迟ID
 let timeoutID;
-let flag=false;
 let texts = document.getElementById("input-input");
 
 /**
@@ -89,10 +88,9 @@ function appendChat(position, imgSrc, text){
 *发送图片
 */
 
-function appendChatImg(position,imgSrc,msgimgSrc){
-	let srcstr="<img src=\"img/"+msgimgSrc+"\" width=\"150px\" hight=\"150px\"/>"
-	appendChat(position,imgSrc,srcstr);
-}
+// function appendChatImg(position,imgSrc,msgimgSrc){
+// 	appendChat(position,imgSrc,srcstr);
+// }
 
 /**
  * 发送信息按钮被点击
@@ -107,10 +105,11 @@ async function sendMessage(){
         text.value = "";
         COW();
 	}else if(/genshin/i.test(text.value)){
-		calculator();
-	}
-	else{
+        text.value = "";
+		genshin(0);
+	}else{
         appendChat("right", USERS_LIST[user].img, text.value)
+        text.value = "";
         scrollBottom()
         await sleep((Math.round(Math.random() * (2 - 1)) + 1) * 1000)
         kurukoReply()
@@ -133,8 +132,8 @@ async function COW(){
     let btn = document.getElementById("input-button")
     btn.style.display = "none"; 
 
-	let strCOW = ["我想要法姐姐如石楠花般洁白如钻石般闪耀的小！橡！皮！", "一拳打进法姐姐批里面","想看我的牛子？我的牛子在法姐姐批里，看不了👋🏻"]
-	let locf="left", locb="left";
+	let strCOW = ["我想要法姐姐如石楠花般洁白如钻石般闪耀的小！橡！皮！", "一拳打进法姐姐批里面", "想看我的牛子？我的牛子在法姐姐批里，看不了👋🏻"]
+	let locf = "left", locb = "left";
 	if(user == 0){
         locf = "right";
     }else if(user == 1){
@@ -196,48 +195,133 @@ function scrollBottom(){
     let contentBox = document.getElementById("content-box");
     contentBox.scrollTop = contentBox.scrollHeight;
 }
-/*
-*
-*/
 
 /*
 *发送输入框
 * */
-let sum=Array(4),i=0;
-function appendChatText(position,imgSrc,id,placeholder,textbef,textaf){
-	let srcstr="请输入您的"+textbef+"：<input type='text' id='"+id+"' placeholder='"+placeholder+"' /><button id='b"+id+"'>确认</button>"+textaf;
-	appendChat(position,imgSrc,srcstr);
-	document.getElementById(id).oninput=function(){
-		if(!Number(this.value)) this.value="";
-	};
-	document.getElementById("b"+id).onclick=function(){
-		if(document.getElementById(id).value=="")return
-		sum[i]=Number(document.getElementById(id).value); console.log(sum[i]); 
-		document.getElementById(id).disabled=true;this.disabled=true;
-		if(i++<4)calculator();
-	}
+// let sum=Array(4),i=0;
+// function appendChatText(position,imgSrc,id,placeholder,textbef,textaf){
+// 	let srcstr="请输入您的"+textbef+"：<input type='text' id='"+id+"' placeholder='"+placeholder+"' /><button id='b"+id+"'>确认</button>"+textaf;
+// 	appendChat(position,imgSrc,srcstr);
+// 	document.getElementById(id).oninput=function(){
+// 		if(!Number(this.value)) this.value="";
+// 	};
+// 	document.getElementById("b"+id).onclick=function(){
+// 		if(document.getElementById(id).value=="")return
+// 		sum[i]=Number(document.getElementById(id).value); console.log(sum[i]); 
+// 		document.getElementById(id).disabled=true;this.disabled=true;
+// 		if(i++<4)calculator();
+// 	}
+// }
+
+// function calculator(){
+//     let btn = document.getElementById("input-button")
+// 	if(i==0){ texts.style.display="none"; btn.style.display = "none";  appendChatText("left","img/help.jpg","gj","攻击力","","");scrollBottom();};
+// 	if(i==1){appendChatText("left","img/help.jpg","bj","暴击率(%)","","");scrollBottom();};
+// 	if(i==2){appendChatText("left","img/help.jpg","bjsh","暴击伤害(%)","","");scrollBottom();};
+// 	if(i==3){appendChatText("left","img/help.jpg","zs","（物理、元素）伤害增伤(%)","","");};
+// 	if(i==4){ let sums=sum[0]*(sum[1]/100+1)*(sum[2]/100+1)*(sum[3]/100+1);
+// 		appendChat("left","img/help.jpg","正常状态下，不计算怪物等级抗性，不发生元素反应时的伤害期望值为："+sums.toFixed(2));scrollBottom();
+// 		texts.style.display="block";btn.style.display = "block"; texts.value=""
+// 	}
+// }
+
+
+let gjl, bjl, bjsh, shjc // 攻击力 暴击率 暴击伤害 伤害加成
+/**
+ * 原神伤害计算功能
+ * @param {number} state 步骤状态
+ */
+function genshin(state){
+    console.log(state)
+    switch(state){
+        case 0:
+            appendChat("left", "img/help.jpg", `
+                请输入您的攻击力：</br>
+                <input style="max-width: 150px" type="number" class="gjl" placeholder="100"/>
+                <button onclick="genshin(1)">确认</button>
+            `)
+            scrollBottom()
+        break;
+        case 1:
+            gjl = document.getElementsByClassName("gjl")
+            gjl = gjl[gjl.length - 1].value
+            if(gjl == ""){
+                return
+            }else{
+                gjl = Number(gjl)
+                appendChat("left", "img/help.jpg", `
+                    请输入您的暴击率(%)：</br>
+                    <input style="max-width: 150px" type="number" class="bjl" placeholder="100"/>
+                    <button onclick="genshin(2)">确认</button>
+                `)
+                scrollBottom()
+            }
+        break;
+        case 2:
+            bjl = document.getElementsByClassName("bjl")
+            bjl = bjl[bjl.length - 1].value
+            if(bjl == ""){
+                return
+            }else{
+                bjl = Number(bjl)
+                appendChat("left", "img/help.jpg", `
+                    请输入您的暴击伤害(%)：</br>
+                    <input style="max-width: 150px" type="number" class="bjsh" placeholder="100"/>
+                    <button onclick="genshin(3)">确认</button>
+                `)
+                scrollBottom()
+            }
+        break;
+        case 3:
+            bjsh = document.getElementsByClassName("bjsh")
+            bjsh = bjsh[bjsh.length - 1].value
+            if(bjsh == ""){
+                return
+            }else{
+                bjsh = Number(bjsh)
+                appendChat("left", "img/help.jpg", `
+                    请输入您的（物理、元素）伤害加成：</br>
+                    <input style="max-width: 150px" type="number" class="shjc" placeholder="100"/>
+                    <button onclick="genshin(4)">确认</button>
+                `)
+                scrollBottom()
+            }
+        break;
+        case 4:
+            shjc = document.getElementsByClassName("shjc")
+            shjc = shjc[shjc.length - 1].value
+            if(shjc == ""){
+                return
+            }else{
+                shjc = Number(shjc)
+                let sum = gjl * (bjl / 100 + 1) * (bjsh / 100 + 1) * (shjc / 100 + 1);
+                appendChat("left", "img/help.jpg", `
+                    正常状态下，不计算怪物等级抗性，不发生元素反应时的伤害期望值为：<span style="color: orange">${sum.toFixed(2)}<span>
+                `)
+                scrollBottom()
+            }
+        break;
+    }
 }
-function calculator(){let btn = document.getElementById("input-button")
-	if(i==0){ texts.style.display="none"; btn.style.display = "none";  appendChatText("left","img/help.jpg","gj","攻击力","","");scrollBottom();};
-	if(i==1){appendChatText("left","img/help.jpg","bj","暴击率(%)","","");scrollBottom();};
-	if(i==2){appendChatText("left","img/help.jpg","bjsh","暴击伤害(%)","","");scrollBottom();};
-	if(i==3){appendChatText("left","img/help.jpg","zs","（物理、元素）伤害增伤(%)","","");};
-	if(i==4){ let sums=sum[0]*(sum[1]/100+1)*(sum[2]/100+1)*(sum[3]/100+1);
-		appendChat("left","img/help.jpg","正常状态下，不计算怪物等级抗性，不发生元素反应时的伤害期望值为："+sums.toFixed(2));scrollBottom();
-		texts.style.display="block";btn.style.display = "block"; texts.value=""
-		}
-}
-/*
-*欢迎界面
-* */
+
+/**
+ * 欢迎界面
+ */
 function welcome(){
-	appendChat("left","img/help.jpg","原神伤害计算器更新啦<br>输入<a style='color:orange' onclick='into()'>\" Genshin\"</a>来计算一下角色的伤害期望值吧！<br><br><img src='img/h.jpg' width=\"150px\" hight=\"150px\"/>");
-	appendChat("left","img/help.jpg","本机器人由<a style='color:orange' href=’https://mobile.twitter.com/MisakaImoto32'>@MisakaImoto32</a>制作，感谢<a style='color:pink' href=\"https://mobile.twitter.com/DFK_KLEE\">@筱原可莉</a>、<a style='color:green' href=\"https://mobile.twitter.com/Misaka_RPC\">@御坂美琴电台🇨🇳</a>提供的技术支持！");
-	appendChat("left","img/help.jpg","旧版机器人请点击<a style='color:red' href=\"../KRobot\">这里</a>喔");
+    appendChat("left", "img/help.jpg", `
+        原神伤害计算器更新啦<br>
+        点击或输入<a style='color: skyblue; cursor:pointer' onclick='genshin(0)'>Genshin</a>来计算一下角色的伤害期望值吧！
+        <br>
+        <br>
+        <img src='img/h.jpg' width="150px"/>
+    `);
+    appendChat("left", "img/help.jpg",`
+        本机器人由<a style='color:orange' href=’https://mobile.twitter.com/MisakaImoto32'>@MisakaImoto32</a>制作。感谢<a style='color:pink' href="https://mobile.twitter.com/DFK_KLEE">@筱原可莉</a>、<a style='color:green' href="https://mobile.twitter.com/Misaka_RPC">@御坂美琴电台🇨🇳</a>提供的技术支持！😋
+    `);
+	appendChat("left", "img/help.jpg",`旧版机器人请点击<a style='color:red' href="../KRobot">这里</a>喔`);
 }
-function into(){
-	texts.value="Genshin"; 
-}
+
 /**
  * 开始函数 设定初试状态
  */
