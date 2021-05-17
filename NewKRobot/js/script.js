@@ -178,7 +178,7 @@ async function COW(){
     scrollBottom();
 
     await sleep((Math.round(Math.random() * (1.5 - 0.5)) + 0.5) * 1000);
-    appendChatImg("left", "img/gugugu.jpg", "amazing.jpg");
+    appendChat("left", "img/gugugu.jpg", `<img src="img/amazing.jpg" width="100%">`);
     scrollBottom();
 
     await sleep((Math.round(Math.random() * (1.8 - 0.5)) + 0.5) * 1000);
