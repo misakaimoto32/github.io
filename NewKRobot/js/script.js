@@ -243,70 +243,97 @@ let gjl, bjl, bjsh, shjc // 攻击力 暴击率 暴击伤害 伤害加成
  * @param {number} state 步骤状态
  */
 function genshin(state){
-    console.log(state)
     switch(state){
         case 0:
-			if(genshinstatus)return;
+			if(document.getElementsByClassName("gjl").length > 0) return;
             appendChat("left", "img/help.jpg", `
                 请输入您的：</br>
-                <input style="max-width: 150px" type="number" class="gjl" placeholder="攻击力" id="t${state}"/>
+                <input style="max-width: 150px" type="number" class="gjl" placeholder="攻击力"/>
                 <button onclick="genshin(1);" class="gjlb">确认</button>
             `);
-			texts.disabled=true;
-			texts.placeholder="输入框和发送按钮已被锁定";
-			document.getElementById("input-button").disabled=true;
-			genshinstatus=true;
+			texts.disabled = true;
+			texts.placeholder = "输入框和发送按钮已被锁定";
+			document.getElementById("input-button").disabled = true;
             scrollBottom()
         break;
         case 1:
-		 var gjl = document.getElementsByClassName("gjl")
-            gjl = gjl[gjl.length - 1].value
+            if(document.getElementsByClassName("bjl").length > 0) return;
+
+            gjl = document.getElementsByClassName("gjl");
+
+            if(gjl.length > 0){
+                gjl = gjl[gjl.length - 1].value;
+            }else{
+                return
+            }
+
             if(gjl == ""){
                 return
             }else{
                 gjl = Number(gjl)
                 appendChat("left", "img/help.jpg", `
                     请输入您的：</br>
-                    <input style="max-width: 150px" type="number" class="bjl" placeholder="暴击率(%)" id="t${state}" />
+                    <input style="max-width: 150px" type="number" class="bjl" placeholder="暴击率(%)"/>
                     <button onclick="genshin(2)">确认</button>
                 `);
-				
                 scrollBottom()
             }
         break;
         case 2:
-            bjl = document.getElementsByClassName("bjl")
-            bjl = bjl[bjl.length - 1].value
+            if(document.getElementsByClassName("bjsh").length > 0) return;
+
+            bjl = document.getElementsByClassName("bjl");
+
+            if(bjl.length > 0){
+                bjl = bjl[bjl.length - 1].value
+            }else{
+                return
+            }
+
             if(bjl == ""){
                 return
             }else{
                 bjl = Number(bjl)
                 appendChat("left", "img/help.jpg", `
                     请输入您的：</br>
-                    <input style="max-width: 150px" type="number" class="bjsh" placeholder="暴击伤害(%)" id="t${state}"/>
+                    <input style="max-width: 150px" type="number" class="bjsh" placeholder="暴击伤害(%)"/>
                     <button onclick="genshin(3)" id="b${count}" id="b${count}">确认</button>
                 `)
                 scrollBottom()
             }
         break;
         case 3:
-            bjsh = document.getElementsByClassName("bjsh")
-            bjsh = bjsh[bjsh.length - 1].value
+            if(document.getElementsByClassName("shjc").length > 0) return;
+
+            bjsh = document.getElementsByClassName("bjsh");
+
+            if(bjsh.length > 0){
+                bjsh = bjsh[bjsh.length - 1].value
+            }else{
+                return
+            }
+
             if(bjsh == ""){
                 return
             }else{
                 bjsh = Number(bjsh)
                 appendChat("left", "img/help.jpg", `
                     请输入您的：</br>
-                    <input style="max-width: 150px" type="number" class="shjc" placeholder="（物理、元素）伤害加成" id="t${state}"/>
+                    <input style="max-width: 150px" type="number" class="shjc" placeholder="（物理、元素）伤害加成"/>
                     <button onclick="genshin(4)" id="b${count}">确认</button>
                 `)
                 scrollBottom()
             }
         break;
         case 4:
-            shjc = document.getElementsByClassName("shjc")
-            shjc = shjc[shjc.length - 1].value
+            shjc = document.getElementsByClassName("shjc");
+            
+            if(shjc.length > 0){
+                shjc = shjc[shjc.length - 1].value
+            }else{
+                return
+            } 
+
             if(shjc == ""){
                 return
             }else{
@@ -315,10 +342,25 @@ function genshin(state){
                 appendChat("left", "img/help.jpg", `
                     正常状态下，不计算怪物等级抗性，不发生元素反应时的伤害期望值为：<span style="color: orange">${sum.toFixed(2)}<span>
                 `);
-				texts.disabled=false;
-				texts.placeholder="请在此输入内容";
-				document.getElementById("input-button").disabled=false;
-				genshinstatus=false
+				texts.disabled = false;
+				texts.placeholder = "请在此输入内容";
+                document.getElementById("input-button").disabled = false;
+                gjl = [...document.getElementsByClassName("gjl")];
+                gjl.forEach((item) => {
+                    item.classList.remove("gjl")
+                });
+                bjl = [...document.getElementsByClassName("bjl")];
+                bjl.forEach((item) => {
+                    item.classList.remove("bjl")
+                });
+                bjsh = [...document.getElementsByClassName("bjsh")];
+                bjsh.forEach((item) => {
+                    item.classList.remove("bjsh")
+                });
+                shjc = [...document.getElementsByClassName("shjc")];
+                shjc.forEach((item) => {
+                    item.classList.remove("shjc")
+                });
                 scrollBottom()
             }
         break;
