@@ -27,7 +27,8 @@ let user = 0
 //对话延迟ID
 let timeoutID;
 let texts = document.getElementById("input-input");
-
+let count=0;
+let genshinstatus=false;
 /**
  * 添加所有可选用户
  */
@@ -74,7 +75,7 @@ function changeUser(i){
 function appendChat(position, imgSrc, text){
     let chatBox = document.getElementById("chat-box");
     chatBox.insertAdjacentHTML('beforeend', `
-        <div class="chat-list chat-${position}">
+        <div class="chat-list chat-${position}" id="${count}">
             <div class="chat-img img-${position}">
                 <img src="${imgSrc}" alt="">
             </div>
@@ -82,8 +83,17 @@ function appendChat(position, imgSrc, text){
                 ${text}
             </p>
         </div>
-    `)
-}
+    `);count++;
+};
+
+//删除对话框(失败)
+// function removeChat(index){
+// 	console.log(document.getElementsByClassName("chat-list chat-text-left"));
+// 	console.log(count)
+// 	document.getElementById(index).remove();
+	
+// 	count--
+// }
 /*
 *发送图片
 */
@@ -236,25 +246,31 @@ function genshin(state){
     console.log(state)
     switch(state){
         case 0:
+			if(genshinstatus)return;
             appendChat("left", "img/help.jpg", `
-                请输入您的攻击力：</br>
-                <input style="max-width: 150px" type="number" class="gjl" placeholder="100"/>
-                <button onclick="genshin(1)">确认</button>
-            `)
+                请输入您的：</br>
+                <input style="max-width: 150px" type="number" class="gjl" placeholder="攻击力" id="t${state}"/>
+                <button onclick="genshin(1);" class="gjlb">确认</button>
+            `);
+			texts.disabled=true;
+			texts.placeholder="输入框和发送按钮已被锁定";
+			document.getElementById("input-button").disabled=true;
+			genshinstatus=true;
             scrollBottom()
         break;
         case 1:
-            gjl = document.getElementsByClassName("gjl")
+		 var gjl = document.getElementsByClassName("gjl")
             gjl = gjl[gjl.length - 1].value
             if(gjl == ""){
                 return
             }else{
                 gjl = Number(gjl)
                 appendChat("left", "img/help.jpg", `
-                    请输入您的暴击率(%)：</br>
-                    <input style="max-width: 150px" type="number" class="bjl" placeholder="100"/>
+                    请输入您的：</br>
+                    <input style="max-width: 150px" type="number" class="bjl" placeholder="暴击率(%)" id="t${state}" />
                     <button onclick="genshin(2)">确认</button>
-                `)
+                `);
+				
                 scrollBottom()
             }
         break;
@@ -266,9 +282,9 @@ function genshin(state){
             }else{
                 bjl = Number(bjl)
                 appendChat("left", "img/help.jpg", `
-                    请输入您的暴击伤害(%)：</br>
-                    <input style="max-width: 150px" type="number" class="bjsh" placeholder="100"/>
-                    <button onclick="genshin(3)">确认</button>
+                    请输入您的：</br>
+                    <input style="max-width: 150px" type="number" class="bjsh" placeholder="暴击伤害(%)" id="t${state}"/>
+                    <button onclick="genshin(3)" id="b${count}" id="b${count}">确认</button>
                 `)
                 scrollBottom()
             }
@@ -281,9 +297,9 @@ function genshin(state){
             }else{
                 bjsh = Number(bjsh)
                 appendChat("left", "img/help.jpg", `
-                    请输入您的（物理、元素）伤害加成：</br>
-                    <input style="max-width: 150px" type="number" class="shjc" placeholder="100"/>
-                    <button onclick="genshin(4)">确认</button>
+                    请输入您的：</br>
+                    <input style="max-width: 150px" type="number" class="shjc" placeholder="（物理、元素）伤害加成" id="t${state}"/>
+                    <button onclick="genshin(4)" id="b${count}">确认</button>
                 `)
                 scrollBottom()
             }
@@ -298,11 +314,15 @@ function genshin(state){
                 let sum = gjl * (bjl / 100 + 1) * (bjsh / 100 + 1) * (shjc / 100 + 1);
                 appendChat("left", "img/help.jpg", `
                     正常状态下，不计算怪物等级抗性，不发生元素反应时的伤害期望值为：<span style="color: orange">${sum.toFixed(2)}<span>
-                `)
+                `);
+				texts.disabled=false;
+				texts.placeholder="请在此输入内容";
+				document.getElementById("input-button").disabled=false;
+				genshinstatus=false
                 scrollBottom()
             }
         break;
-    }
+    };
 }
 
 /**
